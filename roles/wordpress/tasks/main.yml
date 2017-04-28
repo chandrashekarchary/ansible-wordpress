@@ -1,0 +1,26 @@
+- name: wordpress wget
+  get_url: url=http://wordpress.org/latest.tar.gz dest=/root
+
+- name: extract files
+  unarchive: copy=no src=/root/wordpress-4.7.4.tar.gz dest=/var/www/html
+
+#- name: move to wordpress to html
+  #command: mv /root/wordpress /var/www/html
+
+#- name: cp wp config
+  #command: cp /var/www/html/wordpress/wp-config-sample.php wp-config.php
+
+- name: copy file wp config
+  template: src=wp-config.php.j2 dest=/var/www/html/wordpress/wp-config.php
+
+- name: chown owner and group as apache
+  file:
+    path: /var/www/html/wordpress
+    owner: apache
+    group: apache
+    recurse: true
+
+#- name: copy file wp config
+#  copy: src=/root/devops/wp-config.php dest=/var/www/html/wordpress
+
+

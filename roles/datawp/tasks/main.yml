@@ -1,0 +1,32 @@
+- name: Adds Python MySQL support on RedHat/CentOS
+  yum: name=MySQL-python state=present
+  when: ansible_os_family == 'RedHat'
+
+#- name: Sets the root password
+#  mysql_user: name=root password='default123'  login_user=root login_password='' login_unix_socket=/var/lib/mysql/mysql.sock
+#  when: cnf.stat.exists == False
+
+
+- name: create my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+
+#- name: copy tadaay db sql file
+#  copy: src=/home/schalla/repos/vishy/data/polyglot.sql dest=/opt/polyglot.sql
+
+- name: Create a new database with name 'polyglot'
+  mysql_db:
+    name: wordpress
+    login_user: root
+    login_password: 'default123'
+#    state: import
+#    target: /opt/polyglot.sql
+
+- mysql_user:
+    name: chandu
+    login_user: root
+    login_password: 'default123'
+    password: default123
+    priv: '*.*:ALL'
+    state: present

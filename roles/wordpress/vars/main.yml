@@ -1,0 +1,6 @@
+---
+# vars file for wordpress
+db_name: wordpress
+db_username: chandu
+db_password: default123
+db_host: localhost
